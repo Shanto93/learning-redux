@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { NavLink } from "react-router";
+import { ModeToggle } from "./mode-toggle";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,6 +21,9 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-6 text-lg">
+            <div>
+              <ModeToggle></ModeToggle>
+            </div>
             <NavLink to="/" className={navLinkClass}>
               Home
             </NavLink>
