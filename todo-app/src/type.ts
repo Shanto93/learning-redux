@@ -6,3 +6,9 @@ export interface ITask {
   priority: "low" | "medium" | "high";
   isCompleted: boolean;
 }
+export interface ITaskForm {
+  title: string;
+  description: string;
+  dueDate: string;
+  priority: "low" | "medium" | "high";
+}
