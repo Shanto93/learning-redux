@@ -217,8 +217,8 @@ const AddTask = () => {
     dispatch(
       addTask({
         ...data,
-        id: "", // will be generated in the reducer
-        isCompleted: false, // will be set in the reducer
+        id: "", 
+        isCompleted: false, 
       })
     );
   };
