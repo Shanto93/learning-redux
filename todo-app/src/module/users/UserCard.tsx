@@ -27,7 +27,7 @@ const UserCard = ({ user }: IUserProps) => {
           <CardAction>
             <div className="flex gap-2">
               <FaTrash
-                onClick={() => dispatch(deleteUser(user.email))}
+                onClick={() => dispatch(deleteUser(user.u_id))}
                 className="text-red-500"
               />
             </div>

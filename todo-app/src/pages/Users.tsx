@@ -5,7 +5,7 @@ import { getUsers } from "@/redux/features/users/userSlice";
 
 const Users = () => {
   const users = useAppSelector(getUsers);
-  
+
   return (
     <div>
       <div className="flex justify-between mt-5 mb-10">
