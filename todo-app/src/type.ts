@@ -12,3 +12,8 @@ export interface ITaskForm {
   dueDate: string;
   priority: "low" | "medium" | "high";
 }
+
+export interface IUser {
+  name: string;
+  email: string;
+}
