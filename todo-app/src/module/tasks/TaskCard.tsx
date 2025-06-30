@@ -1,20 +1,19 @@
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardAction,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useAppDispatch } from "@/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import { cn } from "@/lib/utils";
 import {
   deleteTask,
   toggleCompleteTask,
 } from "@/redux/features/tasks/taskSlice";
+import { getUsers } from "@/redux/features/users/userSlice";
 import type { ITask } from "@/type";
 import { FaTrash } from "react-icons/fa";
 
@@ -24,6 +23,11 @@ interface IProps {
 
 const TaskCard = ({ task }: IProps) => {
   const dispatch = useAppDispatch();
+  const users = useAppSelector(getUsers);
+  console.log(users);
+  const assignedUser = users.find((user) => user.u_id === task.assignTo);
+  console.log(assignedUser);
+
   return (
     <div>
       <Card className={cn("w-full max-w-sm")}>
@@ -56,12 +60,14 @@ const TaskCard = ({ task }: IProps) => {
             </div>
           </CardAction>
         </CardHeader>
-        <CardContent>//Card Content</CardContent>
-        <CardFooter className="flex-col gap-2">
+        <CardContent>
+          Assigned To - {assignedUser ? assignedUser.name : "Not Assigned"}
+        </CardContent>
+        {/* <CardFooter className="flex-col gap-2">
           <Button type="submit" className="w-full">
-            Login
+            Button
           </Button>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </div>
   );

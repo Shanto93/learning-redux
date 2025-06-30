@@ -1,6 +1,6 @@
 import type { RootState } from "@/redux/store";
 import type { IUser } from "@/type";
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 
 interface IInitialUserState {
   users: IUser[];
@@ -9,10 +9,12 @@ interface IInitialUserState {
 const initialState: IInitialUserState = {
   users: [
     {
+      u_id: "a1767216731836",
       name: "shanto",
       email: "shanto@gmail.com",
     },
     {
+      u_id: "1267416g12t3",
       name: "sanjida",
       email: "sanjida@gmail.com",
     },
@@ -24,7 +26,11 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     addUser: (state, action: PayloadAction<IUser>) => {
-      state.users.push(action.payload);
+      const userData = {
+        ...action.payload,
+        u_id: nanoid(),
+      };
+      state.users.push(userData);
     },
 
     deleteUser: (state, action) => {

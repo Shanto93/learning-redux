@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -25,36 +24,25 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useAppDispatch } from "@/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import { cn } from "@/lib/utils";
 import { addTask } from "@/redux/features/tasks/taskSlice";
-import type { ITaskForm } from "@/type";
+import { getUsers } from "@/redux/features/users/userSlice";
+import type { ITask } from "@/type";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { Popover } from "@radix-ui/react-popover";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 
 const AddTask = () => {
-  const form = useForm<ITaskForm>({
-    defaultValues: {
-      title: "",
-      description: "",
-      priority: "medium",
-      dueDate: "",
-    },
-  });
+  const form = useForm();
 
   const dispatch = useAppDispatch();
+  const users = useAppSelector(getUsers);
 
-  const onSubmit = (data: ITaskForm) => {
-    dispatch(
-      addTask({
-        ...data,
-        id: "", 
-        isCompleted: false, 
-      })
-    );
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    dispatch(addTask(data as ITask));
   };
 
   return (
@@ -99,7 +87,32 @@ const AddTask = () => {
               )}
             />
 
-            {/* Priority */}
+            {/* Assigned to */}
+            <FormField
+              control={form.control}
+              name="assignedTo"
+              render={({ field }) => (
+                <FormItem className="mt-3">
+                  <FormLabel>Assign To</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="w-full border-2 mb-3 py-2 px-3">
+                        <SelectValue placeholder="Select Priority" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {users.map((user) => (
+                        <SelectItem value={user.u_id}>{user.name}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
+            {/* Priority*/}
             <FormField
               control={form.control}
               name="priority"

@@ -18,21 +18,15 @@ import {
 import { useAppDispatch } from "@/hooks/hooks";
 import { addUser } from "@/redux/features/users/userSlice";
 import type { IUser } from "@/type";
-import { useForm } from "react-hook-form";
+import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 
 const AddUser = () => {
-  // Provide default values and proper typing
-  const form = useForm<IUser>({
-    defaultValues: {
-      name: "",
-      email: "",
-    },
-  });
+  const form = useForm();
 
   const dispatch = useAppDispatch();
 
-  const onSubmit = (data: IUser) => {
-    dispatch(addUser(data));
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    dispatch(addUser(data as IUser));
   };
 
   return (
@@ -46,7 +40,7 @@ const AddUser = () => {
             Fillup this form
           </DialogDescription>
           <DialogHeader>
-            <DialogTitle>Add User</DialogTitle> {/* Changed from "Add Task" */}
+            <DialogTitle>Add User</DialogTitle>
           </DialogHeader>
 
           <Form {...form}>
