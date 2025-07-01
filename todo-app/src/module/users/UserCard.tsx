@@ -5,9 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useAppDispatch } from "@/hooks/hooks";
 import { cn } from "@/lib/utils";
-import { deleteUser } from "@/redux/features/users/userSlice";
 
 import type { IUser } from "@/type";
 import { FaTrash } from "react-icons/fa";
@@ -17,7 +15,6 @@ interface IUserProps {
 }
 
 const UserCard = ({ user }: IUserProps) => {
-  const dispatch = useAppDispatch();
   return (
     <div>
       <Card className={cn("w-full max-w-sm")}>
@@ -26,10 +23,7 @@ const UserCard = ({ user }: IUserProps) => {
           <CardDescription>{user.email}</CardDescription>
           <CardAction>
             <div className="flex gap-2">
-              <FaTrash
-                onClick={() => dispatch(deleteUser(user.u_id))}
-                className="text-red-500"
-              />
+              <FaTrash className="text-red-500" />
             </div>
           </CardAction>
           <CardAction></CardAction>

@@ -1,17 +1,29 @@
 import { TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useAppDispatch } from "@/hooks/hooks";
+
 import AddTask from "@/module/tasks/AddTask";
 import TaskCard from "@/module/tasks/TaskCard";
-import {
-  filterTasksByPriority,
-  selectTasks,
-} from "@/redux/features/tasks/taskSlice";
+import { useGetAllTasksQuery } from "@/redux/api/baseApi";
+import type { ITask } from "@/type";
+
 import { Tabs } from "@radix-ui/react-tabs";
-import { useSelector } from "react-redux";
 
 const TaskPage = () => {
-  const tasks = useSelector(selectTasks);
-  const dispatch = useAppDispatch();
+  // const tasks = useSelector(selectTasks);
+
+  const { data, isLoading, isError } = useGetAllTasksQuery(undefined);
+  console.log(data, isLoading, isError);
+
+  if (isLoading) {
+    return <div>Loading tasks...</div>;
+  }
+
+  if (isError) {
+    return <div>Error loading tasks</div>;
+  }
+
+  if (!data || !data.tasks) {
+    return <div>No tasks found</div>;
+  }
 
   return (
     <div>
@@ -23,25 +35,25 @@ const TaskPage = () => {
           <Tabs defaultValue="all">
             <TabsList>
               <TabsTrigger
-                onClick={() => dispatch(filterTasksByPriority("all"))}
+                // onClick={() => dispatch(filterTasksByPriority("all"))}
                 value="all"
               >
                 All
               </TabsTrigger>
               <TabsTrigger
-                onClick={() => dispatch(filterTasksByPriority("high"))}
+                // onClick={() => dispatch(filterTasksByPriority("high"))}
                 value="high"
               >
                 High
               </TabsTrigger>
               <TabsTrigger
-                onClick={() => dispatch(filterTasksByPriority("medium"))}
+                // onClick={() => dispatch(filterTasksByPriority("medium"))}
                 value="medium"
               >
                 Medium
               </TabsTrigger>
               <TabsTrigger
-                onClick={() => dispatch(filterTasksByPriority("low"))}
+                // onClick={() => dispatch(filterTasksByPriority("low"))}
                 value="low"
               >
                 Low
@@ -54,7 +66,7 @@ const TaskPage = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {tasks.map((task) => (
+        {data.tasks.map((task: ITask) => (
           <TaskCard key={task.id} task={task}></TaskCard>
         ))}
       </div>

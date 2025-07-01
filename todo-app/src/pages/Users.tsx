@@ -1,11 +1,6 @@
-import { useAppSelector } from "@/hooks/hooks";
 import AddUser from "@/module/users/AddUser";
-import UserCard from "@/module/users/UserCard";
-import { getUsers } from "@/redux/features/users/userSlice";
 
 const Users = () => {
-  const users = useAppSelector(getUsers);
-
   return (
     <div>
       <div className="flex justify-between mt-5 mb-10">
@@ -18,9 +13,9 @@ const Users = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {users.map((user) => (
+        {/* {users.map((user) => (
           <UserCard key={user.email} user={user}></UserCard>
-        ))}
+        ))} */}
       </div>
     </div>
   );
